@@ -1,0 +1,465 @@
+<!-- referred code from https://bl.ocks.org/d3noob/8375092 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1", charset="utf-8">
+
+    <title>Tree Example</title>
+
+    <style>
+	
+	.node {
+		cursor: pointer;
+	}
+
+	.node circle {
+	  fill: #fff;
+	  stroke: steelblue;
+	  stroke-width: 3px;
+	}
+
+	.node text {
+	  font: 14px Times New Roman;
+	  font-weight: bold;
+	}
+
+	.link {
+	  fill: none;
+	  stroke: #ccc;
+	  stroke-width: 2px;
+	}
+	body {font-family: Arial, Helvetica, sans-serif;}
+
+	/* The Modal (background) */
+	.modal {
+	  display: none; /* Hidden by default */
+	  position: fixed; /* Stay in place */
+	  z-index: 1; /* Sit on top */
+	  padding-top: 100px; /* Location of the box */
+	  left: 0;
+	  top: 0;
+	  width: 100%; /* Full width */
+	  height: 100%; /* Full height */
+	  overflow: auto; /* Enable scroll if needed */
+	  background-color: rgb(0,0,0); /* Fallback color */
+	  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+
+	/* Modal Content */
+	.modal-content {
+	  background-color: #fefefe;
+	  margin: auto;
+	  padding: 20px;
+	  border: 1px solid #888;
+	  width: 80%;
+	}
+
+	/* The Close Button */
+	.close {
+	  color: #aaaaaa;
+	  float: right;
+	  font-size: 28px;
+	  font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+	  color: #000;
+	  text-decoration: none;
+	  cursor: pointer;
+	}
+    </style>
+
+  </head>
+
+  <body>
+
+<!-- load the d3.js library -->	
+<script src="https://d3js.org/d3.v3.min.js"></script>
+	
+<script>
+
+var treeData = [
+  {
+    "name": "Varun Rao",
+    "parent": "null",
+    "icon": "data/Image1.jpg",
+    "children": [
+      {
+        "name": "Education",
+        "parent": "Varun Rao",
+        "children": [
+          {
+            "name": "Bachelors",
+            "parent": "Education",
+            "children":[
+            {
+            	"name":"Bachelor of Technology in Information Technology from National Institute of Technology,Durgapur 2013-17",
+            	"parent":"Bachelors"
+            }
+            ]
+          },
+          {
+            "name": "Masters",
+            "parent": "Education",
+            "children":[
+            {
+            	"name":"Pursuing Master of computer sciences at Arizona State University Spring 2019-Present",
+            	"parent":"Masters"
+            }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Experience",
+        "parent": "Varun Rao",
+        "children":[
+        {
+        	"name": "MAQ Software",
+        	"parent": "Experience",
+        	"children":[
+        	{
+        	"name": "Worked in Agile environment as Data warehouse developer for sales data of a Tech giant",
+        	"parent": "MAQ Software"
+        },
+        {
+        	"name": "Being Part of DevOps Team gained Firsthand experience on Azure VMs as part of Operational activities.",
+        	"parent": "MAQ Software"
+        },
+        {
+        	"name": "Designed and developed ETL packages to extract data from multiple data sources.",
+        	"parent": "MAQ Software"
+        },
+        {
+        	"name": "Created Stored procedures to manipulate data as per the requirements.",
+        	"parent": "MAQ Software"
+        },
+        {
+        	"name": "Worked with POWER BI (Modern Day Data Visualization Tool).",
+        	"parent": "MAQ Software"
+        },
+        {
+        	"name": "Created Automated Test Cases to detect any unexpected failure.",
+        	"parent": "MAQ Software"
+        },
+        {
+        	"name": "Created SQL Server jobs to automate daily refresh of databases.",
+        	"parent": "MAQ Software"
+        },
+        {
+        	"name": "Developed a Machine Learning Model which segregates the support mails according to the priority and Hierarchy.",
+        	"parent": "MAQ Software"
+        }
+        ]
+        }
+        ]
+      },
+      {
+        "name": "Internship",
+        "parent": "Varun Rao",
+        "children":[
+        {
+        	"name":"Understanding It dept in industry",
+        	"parent":"Internship",
+        	"children":[
+        	{
+        		"name":"Learnt how data is protected from potential hazards through On-Premise Servers.",
+        		"parent":"Understanding It dept in industry"
+        	},
+        	{
+        		"name":"Learnt how industries use SAP Technologies.",
+        		"parent":"Understanding It dept in industry"
+        	},
+        	{
+        		"name":"Learnt About automation of machines at Hazardous places.",
+        		"parent":"Understanding It dept in industry"
+        	}
+        	]
+        }
+        ]
+      },
+      {
+        "name": "Research and Projects",
+        "parent": "Varun Rao",
+        "children": [
+        {
+        	"name":"Virtual Reality Simulation of MRI",
+        	"parent":"Research and Projects"
+        },
+        {
+        	"name":"DBMSI",
+        	"parent":"Research and Projects"
+        },
+        {
+        	"name":"FOA",
+        	"parent":"Research and Projects"
+        }
+        ]
+      },
+      {
+        "name": "Certifications",
+        "parent": "Varun Rao",
+        "children":[
+        	{
+        		"name": "Microsoft 70-761: Querying Data with Transact-SQL.",
+        		"parent":"Certifications"
+        	},
+        	{
+        		"name": "Microsoft 70-762: Developing SQL Databases.",
+        		"parent":"Certifications"
+        	},
+        	{
+        		"name": "Microsoft 70-778: Analysing and Visualizing Data with Microsoft Power BI.",
+        		"parent":"Certifications"
+        	},
+        	{
+        		"name": "Algorithms by Stanford University",
+        		"parent":"Certifications"
+        	},
+        	{
+        		"name": "Data Warehousing for Business Intelligence specialization by University of Colorodo",
+        		"parent":"Certifications"
+        	}
+        	]
+      },
+      {
+        "name": "Volunteering",
+        "parent": "Varun Rao",
+        "children": [
+          {
+            "name": "National Service Scheme",
+            "parent": "Volunteering",
+            "children":[
+            {
+            	"name":"NSS Nit Durgapur UNIT LEADER and PARADE COMMANDER.",
+            	"parent":"National Service Scheme"
+            },
+            {
+            	"name":"Lead a Team of 200 and shown an exceptional involvement by organising various programs, Likes of Medical Camps for which I received a Special appreciation certificate from NSS Coordinator. 2014-17",
+            	"parent":"National Service Scheme"
+            }
+            ]
+          },
+          {
+            "name": "Cameras",
+            "parent": "Volunteering",
+            "children":[
+            {
+            	"name":"CO-Founder and general secretary in the college media club CAMERAS. 2014-17",
+            	"parent":"Cameras"
+            }]
+          }
+        ]
+      },
+      {
+        "name": "Skills",
+        "parent": "Varun Rao",
+        "children":[
+        {
+        	"name": "Programming Languages",
+        	"parent":"Skills",
+        	"children":[
+        	{
+        		"name": "python",
+        		"parent":"Programming Languages"
+        	},
+        	{
+        		"name": "C++",
+        		"parent":"Programming Languages"
+        	}
+        	]
+        },
+        {
+        	"name": "Other Languages Known",
+        	"parent":"Skills",
+        	"children":[
+        	{
+        		"name": "SQL",
+        		"parent":"Other Languages Known"
+        	},
+        	{
+        		"name": "HTML",
+        		"parent":"Other Languages Known"
+        	},
+        	{
+        		"name": "CSS",
+        		"parent":"Other Languages Known"
+        	},
+        	{
+        		"name": "Javascript",
+        		"parent":"Other Languages Known"
+        	},
+        	{
+        		"name": "D3.js",
+        		"parent":"Other Languages Known",
+        		"text":"hi"
+        	}
+        	]
+        },
+        ]
+      }
+    ]
+  }
+];
+
+
+// ************** Generate the tree diagram	 *****************
+var margin = {top: 20, right: 120, bottom: 20, left: 200},
+	width = 2000 - margin.right - margin.left,
+	height = 1500 - margin.top - margin.bottom;
+	
+var i = 0,
+	duration = 750,
+	root;
+var infoBox = d3.select(".modal");
+var tree = d3.layout.tree()
+	.size([height, width]);
+
+var diagonal = d3.svg.diagonal()
+	.projection(function(d) { return [d.y, d.x]; });
+
+var svg = d3.select("body").append("svg")
+	.attr("width", width + margin.right + margin.left)
+	.attr("height", height + margin.top + margin.bottom)
+  .append("g")
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+root = treeData[0];
+root.x0 = height / 2;
+root.y0 = 0;
+  
+update(root);
+
+d3.select(self.frameElement).style("height", "500px");
+
+function update(source) {
+
+  // Compute the new tree layout.
+  var nodes = tree.nodes(root).reverse(),
+	  links = tree.links(nodes);
+
+  // Normalize for fixed-depth.
+  nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+  // Update the nodes…
+  var node = svg.selectAll("g.node")
+	  .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+  // Enter any new nodes at the parent's previous position.
+  var nodeEnter = node.enter().append("g")
+	  .attr("class", "node")
+	  .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+	  .on("click", click);
+nodeEnter.append("image")
+      .attr("xlink:href", function(d) { return d.icon; })
+      .attr("x", "-12px")
+      .attr("y", "-12px")
+      .attr("width", "80px")
+      .attr("height", "80px");
+  nodeEnter.append("circle")
+	  .attr("r", 1e-6)
+	  .style("fill", function(d) { 
+	  	if(d._children){
+	  		return "lightsteelblue"
+	  	}
+	  	else if(d.name=="Varun Rao"){
+	  		return "white"
+	  	}
+	  	else{
+	  		return "#fff"
+	  	}})
+
+	  	
+
+  nodeEnter.append("text")
+	  .attr("x", function(d) { return d.children || d._children ? -13 : 13; })
+	  .attr("dy", ".35em")
+	  .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+	  .text(function(d) { return d.name; })
+	  .style("fill-opacity", 1e-6);
+
+  // Transition nodes to their new position.
+  var nodeUpdate = node.transition()
+	  .duration(duration)
+	  .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+  nodeUpdate.select("circle")
+	  .attr("r", 10)
+	  .style("fill", function(d) { if(d._children){
+	  		return "lightsteelblue"
+	  	}
+	  	else if(d.name=="Varun Rao"){
+	  		return "white"
+	  	}
+	  	else{
+	  		return "#fff"
+	  	}})
+
+  nodeUpdate.select("text")
+	  .style("fill-opacity", 1);
+
+  // Transition exiting nodes to the parent's new position.
+  var nodeExit = node.exit().transition()
+	  .duration(duration)
+	  .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+	  .remove();
+
+  nodeExit.select("circle")
+	  .attr("r", 1e-6);
+
+  nodeExit.select("text")
+	  .style("fill-opacity", 1e-6);
+
+  // Update the links…
+  var link = svg.selectAll("path.link")
+	  .data(links, function(d) { return d.target.id; });
+
+  // Enter any new links at the parent's previous position.
+  link.enter().insert("path", "g")
+	  .attr("class", "link")
+	  .attr("d", function(d) {
+		var o = {x: source.x0, y: source.y0};
+		return diagonal({source: o, target: o});
+	  });
+
+  // Transition links to their new position.
+  link.transition()
+	  .duration(duration)
+	  .attr("d", diagonal);
+
+  // Transition exiting nodes to the parent's new position.
+  link.exit().transition()
+	  .duration(duration)
+	  .attr("d", function(d) {
+		var o = {x: source.x, y: source.y};
+		return diagonal({source: o, target: o});
+	  })
+	  .remove();
+
+  // Stash the old positions for transition.
+  nodes.forEach(function(d) {
+	d.x0 = d.x;
+	d.y0 = d.y;
+  });
+}
+
+
+
+function click(d) {
+  if (d.children) {
+    d._children = d.children;
+    d.children = null;
+  } else {
+    d.children = d._children;
+    d._children = null;
+  }
+  update(d);
+}
+
+</script>
+	
+  </body>
+</html>
